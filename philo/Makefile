@@ -3,9 +3,9 @@ NAME=philo
 CC=gcc
 FLAGS=-Wall -Werror -Wextra -pthread
 
-SRC=main.c
+SRC=main.c utils.c input.c
 
-RM =rm -rf
+RM=rm -rf
 
 all: $(NAME)
 
@@ -23,4 +23,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY all clean fclean re
+.PHONY: all clean fclean re
