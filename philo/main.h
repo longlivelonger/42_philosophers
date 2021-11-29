@@ -6,7 +6,7 @@
 /*   By: sbronwyn <sbronwyn@student.21-school.ru>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/15 15:03:41 by sbronwyn          #+#    #+#             */
-/*   Updated: 2021/11/16 17:08:57 by sbronwyn         ###   ########.fr       */
+/*   Updated: 2021/11/29 23:08:54 by sbronwyn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,8 @@ typedef struct s_args
 
 typedef struct s_philosopher
 {
-	int				start_time;
+	int				num;
+	struct timeval	time;
 	t_args			*args;
 	pthread_mutex_t	*left_fork;
 	pthread_mutex_t	*right_fork;
@@ -39,5 +40,6 @@ typedef struct s_philosopher
 void			parse_args(t_args *args, int size, char **arr);
 
 t_philosopher	*create_philosophers_data(t_args *args);
+void			free_philo_data(t_philosopher *philo_data, t_args *args);
 
 #endif
