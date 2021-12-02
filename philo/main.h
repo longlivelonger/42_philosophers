@@ -6,7 +6,7 @@
 /*   By: sbronwyn <sbronwyn@student.21-school.ru>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/15 15:03:41 by sbronwyn          #+#    #+#             */
-/*   Updated: 2021/12/02 05:06:21 by sbronwyn         ###   ########.fr       */
+/*   Updated: 2021/12/02 06:00:20 by sbronwyn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ typedef struct s_philosopher
 {
 	int				id;
 	struct timeval	start_time;
-	struct timeval	meal_time;
+	struct timeval	last_meal_time;
 	t_args			*args;
 	pthread_mutex_t	*left_fork;
 	pthread_mutex_t	*right_fork;

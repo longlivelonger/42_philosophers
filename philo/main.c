@@ -6,7 +6,7 @@
 /*   By: sbronwyn <sbronwyn@student.21-school.ru>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/14 18:26:47 by sbronwyn          #+#    #+#             */
-/*   Updated: 2021/12/02 05:04:22 by sbronwyn         ###   ########.fr       */
+/*   Updated: 2021/12/02 05:55:40 by sbronwyn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,12 @@
 int	is_died(t_philosopher *data)
 {
 	struct timeval	time;
-	int				interval;
+	int				interval_ms;
 
 	gettimeofday(&time, 0);
-	interval = (int)(time.tv_sec - data->meal_time.tv_sec) * 1000
-		+ (int)(time.tv_usec - data->meal_time.tv_usec) / 1000;
-	// printf("%d\n", interval);
-	if (interval > data->args->time_to_die)
+	interval_ms = (int)(time.tv_sec - data->last_meal_time.tv_sec) * 1000
+		+ (int)(time.tv_usec - data->last_meal_time.tv_usec) / 1000;
+	if (interval_ms > data->args->time_to_die)
 		return (1);
 	return (0);
 }
