@@ -6,7 +6,7 @@
 /*   By: sbronwyn <sbronwyn@student.21-school.ru>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 16:35:02 by sbronwyn          #+#    #+#             */
-/*   Updated: 2021/11/29 23:09:11 by sbronwyn         ###   ########.fr       */
+/*   Updated: 2021/12/02 05:06:25 by sbronwyn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,9 @@ t_philosopher	*create_philosophers_data(t_args *args)
 	i = -1;
 	while (++i < args->n_philosophers)
 	{
-		philo_data[i].num = i + 1;
-		gettimeofday(&philo_data[i].time, 0);
+		philo_data[i].id = i + 1;
+		gettimeofday(&philo_data[i].start_time, 0);
+		philo_data[i].meal_time = philo_data[i].start_time;
 		philo_data[i].args = args;
 		if (pthread_mutex_init(forks + i, 0) != 0)
 			return (0);
@@ -47,4 +48,5 @@ void	free_philo_data(t_philosopher *philo_data, t_args *args)
 	while (++i < args->n_philosophers)
 		pthread_mutex_destroy(philo_data[i].left_fork);
 	free(philo_data);
+	exit(0);
 }
