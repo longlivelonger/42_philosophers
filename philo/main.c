@@ -6,7 +6,7 @@
 /*   By: sbronwyn <sbronwyn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/14 18:26:47 by sbronwyn          #+#    #+#             */
-/*   Updated: 2021/12/02 09:16:11 by sbronwyn         ###   ########.fr       */
+/*   Updated: 2021/12/02 09:36:20 by sbronwyn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	*philosopher(void *arg)
 	return (0);
 }
 
-void	run_threads(t_philosopher *philo_data, t_args args)
+void	run_philosophers(t_philosopher *philo_data, t_args args)
 {
 	pthread_t	thread;
 	int			i;
@@ -80,7 +80,7 @@ void	monitor(t_philosopher *philo_data, t_args args)
 
 	while (1)
 	{
-		usleep(1000);
+		usleep(5000);
 		eaten_philo_count = 0;
 		i = -1;
 		while (++i < args.n_philosophers)
@@ -88,8 +88,8 @@ void	monitor(t_philosopher *philo_data, t_args args)
 			eaten_philo_count += philo_data[i].eaten_n_times;
 			if (is_died(philo_data + i) && !philo_data[i].eaten_n_times)
 			{
-				pthread_mutex_lock(philo_data->someone_died);
 				print_status(philo_data + i, "is died", 1);
+				pthread_mutex_lock(philo_data->someone_died);
 				free_philo_data(philo_data, &args);
 			}
 		}
@@ -110,7 +110,7 @@ int	main(int argc, char **argv)
 	create_death_mutex(philo_data, &args);
 	if (philo_data == 0)
 		return (1);
-	run_threads(philo_data, args);
+	run_philosophers(philo_data, args);
 	monitor(philo_data, args);
 	return (0);
 }
