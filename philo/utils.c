@@ -3,14 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sbronwyn <sbronwyn@student.21-school.ru>   +#+  +:+       +#+        */
+/*   By: sbronwyn <sbronwyn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 16:35:02 by sbronwyn          #+#    #+#             */
-/*   Updated: 2021/12/02 05:59:36 by sbronwyn         ###   ########.fr       */
+/*   Updated: 2021/12/02 09:15:18 by sbronwyn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "main.h"
+
+int	create_death_mutex(t_philosopher *philo_data, t_args *args)
+{
+	pthread_mutex_t	*someone_died;
+	int				i;
+
+	someone_died = malloc(sizeof(*someone_died));
+	if (someone_died == 0)
+		return (0);
+	pthread_mutex_init(someone_died, 0);
+	i = -1;
+	while (++i < args->n_philosophers)
+		philo_data[i].someone_died = someone_died;
+	return (1);
+}
 
 t_philosopher	*create_philosophers_data(t_args *args)
 {
@@ -26,6 +41,7 @@ t_philosopher	*create_philosophers_data(t_args *args)
 	while (++i < args->n_philosophers)
 	{
 		philo_data[i].id = i + 1;
+		philo_data[i].eaten_n_times = 0;
 		gettimeofday(&philo_data[i].start_time, 0);
 		philo_data[i].last_meal_time = philo_data[i].start_time;
 		philo_data[i].args = args;

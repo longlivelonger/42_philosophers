@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sbronwyn <sbronwyn@student.21-school.ru>   +#+  +:+       +#+        */
+/*   By: sbronwyn <sbronwyn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/14 18:26:47 by sbronwyn          #+#    #+#             */
-/*   Updated: 2021/12/02 05:55:40 by sbronwyn         ###   ########.fr       */
+/*   Updated: 2021/12/02 09:16:11 by sbronwyn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ void	*philosopher(void *arg)
 		usleep(data->args->time_to_sleep * 1000);
 		print_status(data, "is thinking", 0);
 	}
+	data->eaten_n_times = 1;
 	return (0);
 }
 
@@ -72,26 +73,44 @@ void	run_threads(t_philosopher *philo_data, t_args args)
 	}
 }
 
+void	monitor(t_philosopher *philo_data, t_args args)
+{
+	int	i;
+	int	eaten_philo_count;
+
+	while (1)
+	{
+		usleep(1000);
+		eaten_philo_count = 0;
+		i = -1;
+		while (++i < args.n_philosophers)
+		{
+			eaten_philo_count += philo_data[i].eaten_n_times;
+			if (is_died(philo_data + i) && !philo_data[i].eaten_n_times)
+			{
+				pthread_mutex_lock(philo_data->someone_died);
+				print_status(philo_data + i, "is died", 1);
+				free_philo_data(philo_data, &args);
+			}
+		}
+		if (eaten_philo_count == args.n_philosophers)
+			free_philo_data(philo_data, &args);
+	}
+}
+
 int	main(int argc, char **argv)
 {
 	t_args			args;
 	t_philosopher	*philo_data;
-	int				i;
 
 	if (argc < 5 || argc > 6)
 		return (1);
 	parse_args(&args, argc - 1, argv + 1);
 	philo_data = create_philosophers_data(&args);
+	create_death_mutex(philo_data, &args);
 	if (philo_data == 0)
 		return (1);
 	run_threads(philo_data, args);
-	while (1)
-	{
-		usleep(1000);
-		i = -1;
-		while (++i < args.n_philosophers)
-			if (is_died(philo_data + i))
-				free_philo_data(philo_data, &args);
-	}
+	monitor(philo_data, args);
 	return (0);
 }
