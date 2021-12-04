@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sbronwyn <sbronwyn@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sbronwyn <sbronwyn@student.21-school.ru>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 16:35:02 by sbronwyn          #+#    #+#             */
-/*   Updated: 2021/12/02 09:15:18 by sbronwyn         ###   ########.fr       */
+/*   Updated: 2021/12/04 23:11:11 by sbronwyn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,22 @@ void	free_philo_data(t_philosopher *philo_data, t_args *args)
 	int	i;
 
 	i = -1;
+	pthread_mutex_destroy(philo_data[0].someone_died);
 	while (++i < args->n_philosophers)
 		pthread_mutex_destroy(philo_data[i].left_fork);
 	free(philo_data);
 	exit(0);
+}
+
+int	is_died(t_philosopher *data)
+{
+	struct timeval	time;
+	int				interval_ms;
+
+	gettimeofday(&time, 0);
+	interval_ms = (int)(time.tv_sec - data->last_meal_time.tv_sec) * 1000
+		+ (int)(time.tv_usec - data->last_meal_time.tv_usec) / 1000;
+	if (interval_ms > data->args->time_to_die)
+		return (1);
+	return (0);
 }

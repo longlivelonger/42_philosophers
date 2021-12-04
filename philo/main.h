@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sbronwyn <sbronwyn@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sbronwyn <sbronwyn@student.21-school.ru>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/15 15:03:41 by sbronwyn          #+#    #+#             */
-/*   Updated: 2021/12/02 09:15:26 by sbronwyn         ###   ########.fr       */
+/*   Updated: 2021/12/04 23:01:00 by sbronwyn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ void			parse_args(t_args *args, int size, char **arr);
 int				create_death_mutex(t_philosopher *philo_data, t_args *args);
 t_philosopher	*create_philosophers_data(t_args *args);
 void			free_philo_data(t_philosopher *philo_data, t_args *args);
+int				is_died(t_philosopher *data);
 
 void			print_status(t_philosopher *data, char *str, int save_time);
 void			take_forks(t_philosopher *data);

@@ -6,7 +6,7 @@
 /*   By: sbronwyn <sbronwyn@student.21-school.ru>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 16:42:05 by sbronwyn          #+#    #+#             */
-/*   Updated: 2021/11/16 16:51:08 by sbronwyn         ###   ########.fr       */
+/*   Updated: 2021/12/04 23:12:44 by sbronwyn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,14 @@ void	parse_args(t_args *args, int size, char **arr)
 	args->time_to_die = ft_atoi(arr[1]);
 	args->time_to_eat = ft_atoi(arr[2]);
 	args->time_to_sleep = ft_atoi(arr[3]);
+	if (args->n_philosophers <= 0)
+		printf("Error: invalid number of philosophers.\n");
+	if (args->time_to_die <= 0 || args->time_to_eat <= 0
+		|| args->time_to_sleep <= 0)
+		printf("Error: invalid time.\n");
+	if (args->n_philosophers <= 0 || args->time_to_die <= 0
+		|| args->time_to_eat <= 0 || args->time_to_sleep <= 0)
+		exit(1);
 	if (size > 4)
 		args->n_times_to_eat = ft_atoi(arr[4]);
 	else
