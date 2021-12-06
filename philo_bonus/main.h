@@ -6,7 +6,7 @@
 /*   By: sbronwyn <sbronwyn@student.21-school.ru>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/15 15:03:41 by sbronwyn          #+#    #+#             */
-/*   Updated: 2021/12/06 11:21:34 by sbronwyn         ###   ########.fr       */
+/*   Updated: 2021/12/06 18:00:59 by sbronwyn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,10 @@
 # include <pthread.h>
 # include <signal.h>
 # include <sys/time.h>
+# include <semaphore.h>
+
+# define EXIT_STATUS_EATEN 10
+# define EXIT_STATUS_DIED 11
 
 typedef struct s_args
 {
@@ -36,7 +40,8 @@ typedef struct s_philosopher
 	struct timeval	start_time;
 	struct timeval	last_meal_time;
 	t_args			*args;
-	int				eaten_n_times;
+	sem_t			*forks;
+	sem_t			*display;
 }	t_philosopher;
 
 void			parse_args(t_args *args, int size, char **arr);

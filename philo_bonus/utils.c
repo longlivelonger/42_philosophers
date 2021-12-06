@@ -6,7 +6,7 @@
 /*   By: sbronwyn <sbronwyn@student.21-school.ru>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 16:35:02 by sbronwyn          #+#    #+#             */
-/*   Updated: 2021/12/06 11:22:09 by sbronwyn         ###   ########.fr       */
+/*   Updated: 2021/12/06 18:51:47 by sbronwyn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,19 +15,27 @@
 t_philosopher	*create_philosophers_data(t_args *args)
 {
 	t_philosopher	*philo_data;
+	sem_t			*forks;
+	sem_t			*display;
 	int				i;
 
 	philo_data = malloc(args->n_philosophers * sizeof(*philo_data));
 	if (philo_data == 0)
 		return (0);
+	sem_unlink("philo_forks");
+	sem_unlink("philo_display");
+	forks = sem_open("philo_forks", O_CREAT | O_EXCL,
+			S_IRWXU, args->n_philosophers);
+	display = sem_open("philo_display", O_CREAT | O_EXCL, S_IRWXU, 1);
 	i = -1;
 	while (++i < args->n_philosophers)
 	{
 		philo_data[i].id = i + 1;
-		philo_data[i].eaten_n_times = 0;
 		gettimeofday(&philo_data[i].start_time, 0);
 		philo_data[i].last_meal_time = philo_data[i].start_time;
 		philo_data[i].args = args;
+		philo_data[i].forks = forks;
+		philo_data[i].display = display;
 	}
 	return (philo_data);
 }
