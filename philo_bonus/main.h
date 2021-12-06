@@ -6,7 +6,7 @@
 /*   By: sbronwyn <sbronwyn@student.21-school.ru>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/15 15:03:41 by sbronwyn          #+#    #+#             */
-/*   Updated: 2021/12/04 23:01:00 by sbronwyn         ###   ########.fr       */
+/*   Updated: 2021/12/06 11:21:34 by sbronwyn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <stdlib.h>
 # include <stdio.h>
 # include <pthread.h>
+# include <signal.h>
 # include <sys/time.h>
 
 typedef struct s_args
@@ -31,12 +32,10 @@ typedef struct s_args
 typedef struct s_philosopher
 {
 	int				id;
+	pid_t			pid;
 	struct timeval	start_time;
 	struct timeval	last_meal_time;
 	t_args			*args;
-	pthread_mutex_t	*left_fork;
-	pthread_mutex_t	*right_fork;
-	pthread_mutex_t	*someone_died;
 	int				eaten_n_times;
 }	t_philosopher;
 
