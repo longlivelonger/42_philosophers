@@ -6,7 +6,7 @@
 /*   By: sbronwyn <sbronwyn@student.21-school.ru>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/15 15:03:41 by sbronwyn          #+#    #+#             */
-/*   Updated: 2021/12/06 18:00:59 by sbronwyn         ###   ########.fr       */
+/*   Updated: 2021/12/07 03:02:05 by sbronwyn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,17 +42,25 @@ typedef struct s_philosopher
 	t_args			*args;
 	sem_t			*forks;
 	sem_t			*display;
+	sem_t			*smb_died;
 }	t_philosopher;
 
 void			parse_args(t_args *args, int size, char **arr);
 
-int				create_death_mutex(t_philosopher *philo_data, t_args *args);
 t_philosopher	*create_philosophers_data(t_args *args);
 void			free_philo_data(t_philosopher *philo_data, t_args *args);
 int				is_died(t_philosopher *data);
+void			lock_display_and_die(t_philosopher *data);
 
 void			print_status(t_philosopher *data, char *str, int save_time);
 void			take_forks(t_philosopher *data);
 void			release_forks(t_philosopher *data);
+
+int				philosopher(t_philosopher *data);
+void			*timekeeper(void *arg);
+
+void			monitor(t_philosopher *philo_data, t_args args);
+
+void			launch_philosophers(t_philosopher *philo_data, t_args args);
 
 #endif

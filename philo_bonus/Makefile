@@ -3,7 +3,7 @@ NAME=philo_bonus
 CC=gcc
 FLAGS=-Wall -Werror -Wextra -pthread
 
-SRC=main.c utils.c input.c actions.c
+SRC=main.c utils.c input.c actions.c philosopher.c monitor.c launch.c
 
 RM=rm -rf
 

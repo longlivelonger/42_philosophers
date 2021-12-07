@@ -6,7 +6,7 @@
 /*   By: sbronwyn <sbronwyn@student.21-school.ru>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/02 04:53:05 by sbronwyn          #+#    #+#             */
-/*   Updated: 2021/12/06 18:14:53 by sbronwyn         ###   ########.fr       */
+/*   Updated: 2021/12/07 02:54:06 by sbronwyn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,13 @@ void	print_status(t_philosopher *data, char *str, int save_time)
 void	take_forks(t_philosopher *data)
 {
 	sem_wait(data->forks);
+	sem_wait(data->smb_died);
 	print_status(data, "has taken a fork", 0);
+	sem_post(data->smb_died);
 	sem_wait(data->forks);
+	sem_wait(data->smb_died);
 	print_status(data, "has taken a fork", 0);
+	sem_post(data->smb_died);
 }
 
 void	release_forks(t_philosopher *data)
