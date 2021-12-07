@@ -6,7 +6,7 @@
 /*   By: sbronwyn <sbronwyn@student.21-school.ru>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/15 15:03:41 by sbronwyn          #+#    #+#             */
-/*   Updated: 2021/12/04 23:01:00 by sbronwyn         ###   ########.fr       */
+/*   Updated: 2021/12/07 03:19:29 by sbronwyn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,5 +50,11 @@ int				is_died(t_philosopher *data);
 void			print_status(t_philosopher *data, char *str, int save_time);
 void			take_forks(t_philosopher *data);
 void			release_forks(t_philosopher *data);
+
+void			*philosopher(void *arg);
+
+void			launch_philosophers(t_philosopher *philo_data, t_args args);
+
+void			monitor(t_philosopher *philo_data, t_args args);
 
 #endif

@@ -1,30 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   launch.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sbronwyn <sbronwyn@student.21-school.ru>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/14 18:26:47 by sbronwyn          #+#    #+#             */
-/*   Updated: 2021/12/07 03:19:32 by sbronwyn         ###   ########.fr       */
+/*   Created: 2021/12/07 03:08:35 by sbronwyn          #+#    #+#             */
+/*   Updated: 2021/12/07 03:19:30 by sbronwyn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "main.h"
 
-int	main(int argc, char **argv)
+void	launch_philosophers(t_philosopher *philo_data, t_args args)
 {
-	t_args			args;
-	t_philosopher	*philo_data;
+	pthread_t	thread;
+	int			i;
 
-	if (argc < 5 || argc > 6)
-		return (1);
-	parse_args(&args, argc - 1, argv + 1);
-	philo_data = create_philosophers_data(&args);
-	create_death_mutex(philo_data, &args);
-	if (philo_data == 0)
-		return (1);
-	launch_philosophers(philo_data, args);
-	monitor(philo_data, args);
-	return (0);
+	i = 0;
+	while (i < args.n_philosophers)
+	{
+		if (pthread_create(&thread, NULL, &philosopher,
+				(void *)(philo_data + i)))
+			exit(1);
+		usleep(50);
+		pthread_detach(thread);
+		i += 2;
+		if (i >= args.n_philosophers && i % 2 == 0)
+			i = 1;
+	}
 }
