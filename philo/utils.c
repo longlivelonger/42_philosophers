@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sbronwyn <sbronwyn@student.21-school.ru>   +#+  +:+       +#+        */
+/*   By: sbronwyn <sbronwyn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 16:35:02 by sbronwyn          #+#    #+#             */
-/*   Updated: 2021/12/04 23:11:11 by sbronwyn         ###   ########.fr       */
+/*   Updated: 2021/12/07 13:10:32 by sbronwyn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ int	is_died(t_philosopher *data)
 	int				interval_ms;
 
 	gettimeofday(&time, 0);
-	interval_ms = (int)(time.tv_sec - data->last_meal_time.tv_sec) * 1000
+	interval_ms = (int)(time.tv_sec - data->last_meal_time.tv_sec) *1000
 		+ (int)(time.tv_usec - data->last_meal_time.tv_usec) / 1000;
 	if (interval_ms > data->args->time_to_die)
 		return (1);
